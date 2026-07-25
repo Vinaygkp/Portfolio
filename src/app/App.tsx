@@ -734,7 +734,7 @@ function Hero() {
                 Hire Me <ArrowUpRight size={14} style={{ marginLeft: 6 }} />
               </MagBtn>
               <a
-                href={`${window.location.origin}/Vinay_kumar.pdf`}
+                href={`${window.location.origin}./Vinay_kumar.pdf`}
                 download="Vinay_kumar.pdf"
                 style={{ textDecoration: "none" }}
               >
