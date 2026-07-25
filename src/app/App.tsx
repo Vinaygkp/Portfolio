@@ -230,28 +230,146 @@ function Loader({ onDone }: { onDone: () => void }) {
 
 const NAV_LINKS = ["About", "Skills", "Projects", "Experience", "Contact"];
 
-function Navigation() {
+export function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", fn, { passive: true });
     return () => window.removeEventListener("scroll", fn);
   }, []);
-  const go = (id: string) => { document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: "smooth" }); setOpen(false); };
+
+  const go = (id: string) => {
+    document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: "smooth" });
+    setOpen(false);
+  };
+
   return (
-    <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000, height: 64, padding: "0 32px", display: "flex", alignItems: "center", justifyContent: "space-between", background: scrolled ? "rgba(5,5,5,0.88)" : "transparent", backdropFilter: scrolled ? "blur(24px)" : "none", borderBottom: scrolled ? "1px solid rgba(255,255,255,0.045)" : "none", transition: "all 0.35s ease" }}>
-      <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} style={{ border: "none", padding: 0, fontFamily: "Outfit,sans-serif", fontSize: 22, fontWeight: 800, background: "linear-gradient(135deg,#00F5FF,#8B5CF6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", cursor: "pointer" } as React.CSSProperties}>VK</button>
+    <nav
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1000,
+        height: 64,
+        padding: "0 32px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        background: scrolled ? "rgba(5,5,5,0.88)" : "transparent",
+        backdropFilter: scrolled ? "blur(24px)" : "none",
+        borderBottom: scrolled ? "1px solid rgba(255,255,255,0.045)" : "none",
+        transition: "all 0.35s ease",
+      }}
+    >
+      {/* Left: Logo */}
+      <a
+        href="https://leetcode.com/u/vinay55ti/"
+        onClick={(e) => {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }}
+        style={{
+          textDecoration: "none",
+          border: "none",
+          padding: 0,
+          fontFamily: "Outfit,sans-serif",
+          fontSize: 22,
+          fontWeight: 800,
+          background: "linear-gradient(135deg,#00F5FF,#8B5CF6)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          cursor: "pointer",
+          display: "inline-block",
+        }}
+      >
+        VK
+      </a>
+
+      {/* Center: Links */}
       <div style={{ display: "flex", gap: 36 }} className="hidden md:flex">
-        {NAV_LINKS.map(l => <NavLink key={l} onClick={() => go(l)}>{l}</NavLink>)}
+        {NAV_LINKS.map((l) => (
+          <NavLink key={l} onClick={() => go(l)}>
+            {l}
+          </NavLink>
+        ))}
       </div>
+
+      {/* Right: Actions (Hire Me & Mobile Toggle) */}
       <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-        <button onClick={() => go("Contact")} className="hidden md:block" style={{ padding: "8px 22px", borderRadius: 100, background: "rgba(0,245,255,0.08)", border: "1px solid rgba(0,245,255,0.28)", color: "#00F5FF", fontSize: 13, fontFamily: "Outfit,sans-serif", fontWeight: 500, cursor: "pointer", transition: "all 0.25s" }} onMouseEnter={e => { e.currentTarget.style.background = "rgba(0,245,255,0.18)"; e.currentTarget.style.boxShadow = "0 0 24px rgba(0,245,255,0.25)"; }} onMouseLeave={e => { e.currentTarget.style.background = "rgba(0,245,255,0.08)"; e.currentTarget.style.boxShadow = "none"; }}>Hire Me</button>
-        <button onClick={() => setOpen(v => !v)} className="md:hidden" style={{ background: "none", border: "none", color: "#fff", padding: 4, cursor: "pointer" }}>{open ? <X size={20} /> : <Menu size={20} />}</button>
+        <button
+          onClick={() => go("Contact")}
+          className="hidden md:block"
+          style={{
+            padding: "8px 22px",
+            borderRadius: 100,
+            background: "rgba(0,245,255,0.08)",
+            border: "1px solid rgba(0,245,255,0.28)",
+            color: "#00F5FF",
+            fontSize: 13,
+            fontFamily: "Outfit,sans-serif",
+            fontWeight: 500,
+            cursor: "pointer",
+            transition: "all 0.25s",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "rgba(0,245,255,0.18)";
+            e.currentTarget.style.boxShadow = "0 0 24px rgba(0,245,255,0.25)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "rgba(0,245,255,0.08)";
+            e.currentTarget.style.boxShadow = "none";
+          }}
+        >
+          Hire Me
+        </button>
+        <button
+          onClick={() => setOpen((v) => !v)}
+          className="md:hidden"
+          style={{ background: "none", border: "none", color: "#fff", padding: 4, cursor: "pointer" }}
+        >
+          {open ? <X size={20} /> : <Menu size={20} />}
+        </button>
       </div>
+
+      {/* Mobile Menu Dropdown */}
       {open && (
-        <div style={{ position: "fixed", top: 64, left: 0, right: 0, background: "rgba(5,5,5,0.97)", backdropFilter: "blur(24px)", borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "24px 32px", display: "flex", flexDirection: "column", gap: 20, animation: "fade-up 0.3s ease" }}>
-          {NAV_LINKS.map(l => <button key={l} onClick={() => go(l)} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.75)", fontSize: 18, fontFamily: "Outfit,sans-serif", textAlign: "left", cursor: "pointer", padding: "4px 0" }}>{l}</button>)}
+        <div
+          style={{
+            position: "fixed",
+            top: 64,
+            left: 0,
+            right: 0,
+            background: "rgba(5,5,5,0.97)",
+            backdropFilter: "blur(24px)",
+            borderBottom: "1px solid rgba(255,255,255,0.06)",
+            padding: "24px 32px",
+            display: "flex",
+            flexDirection: "column",
+            gap: 20,
+            animation: "fade-up 0.3s ease",
+          }}
+        >
+          {NAV_LINKS.map((l) => (
+            <button
+              key={l}
+              onClick={() => go(l)}
+              style={{
+                background: "none",
+                border: "none",
+                color: "rgba(255,255,255,0.75)",
+                fontSize: 18,
+                fontFamily: "Outfit,sans-serif",
+                textAlign: "left",
+                cursor: "pointer",
+                padding: "4px 0",
+              }}
+            >
+              {l}
+            </button>
+          ))}
         </div>
       )}
     </nav>
@@ -261,9 +379,35 @@ function Navigation() {
 function NavLink({ children, onClick }: { children: ReactNode; onClick: () => void }) {
   const [hov, setHov] = useState(false);
   return (
-    <button onClick={onClick} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)} style={{ background: "none", border: "none", cursor: "pointer", padding: "4px 0", color: hov ? "#00F5FF" : "rgba(255,255,255,0.55)", fontSize: 14, fontFamily: "Outfit,sans-serif", letterSpacing: "0.3px", transition: "color 0.2s", position: "relative" }}>
+    <button
+      onClick={onClick}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        background: "none",
+        border: "none",
+        cursor: "pointer",
+        padding: "4px 0",
+        color: hov ? "#00F5FF" : "rgba(255,255,255,0.55)",
+        fontSize: 14,
+        fontFamily: "Outfit,sans-serif",
+        letterSpacing: "0.3px",
+        transition: "color 0.2s",
+        position: "relative",
+      }}
+    >
       {children}
-      <span style={{ position: "absolute", bottom: 0, left: 0, height: "1px", width: hov ? "100%" : "0%", background: "linear-gradient(90deg,#00F5FF,#8B5CF6)", transition: "width 0.25s ease" }} />
+      <span
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          height: "1px",
+          width: hov ? "100%" : "0%",
+          background: "linear-gradient(90deg,#00F5FF,#8B5CF6)",
+          transition: "width 0.25s ease",
+        }}
+      />
     </button>
   );
 }
@@ -1017,8 +1161,8 @@ const PROJECTS: ProjectItem[] = [
     tech: ["React", "TypeScript", "Tailwind CSS"],
     img: "./images/Portfolio.png",
     color: "#3B82F6",
-    liveUrl: "https://your-portfolio-link.com",
-    githubUrl: "https://github.com/yourusername/portfolio",
+    liveUrl: "https://portfolio-4tb6.vercel.app/",
+    githubUrl: "https://github.com/Vinaygkp/Portfolio",
   },
   {
     title: "Vaishno Devi Website",
@@ -1036,7 +1180,7 @@ const PROJECTS: ProjectItem[] = [
     img: "https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?w=600&h=400&fit=crop&auto=format",
     video: "./images/video.mp4",
     color: "#10B981",
-    liveUrl: "#", 
+    liveUrl: "#",
     githubUrl: "#",
   },
 ];
@@ -1460,8 +1604,8 @@ interface CertItem {
   year: string;
   color: string;
   abbr: string;
-  img: string;    
-  link?: string;    
+  img: string;
+  link?: string;
 }
 
 const CERTS: CertItem[] = [
@@ -1570,9 +1714,8 @@ function Certificates() {
                     background: isActive
                       ? "rgba(255,255,255,0.06)"
                       : "rgba(255,255,255,0.02)",
-                    border: `1px solid ${
-                      isActive ? c.color + "60" : "rgba(255,255,255,0.08)"
-                    }`,
+                    border: `1px solid ${isActive ? c.color + "60" : "rgba(255,255,255,0.08)"
+                      }`,
                     transform: isActive
                       ? "translateY(-8px) scale(1.02)"
                       : "scale(1)",
@@ -1611,7 +1754,7 @@ function Certificates() {
                         (e.target as HTMLElement).style.display = 'none';
                       }}
                     />
-                    
+
                     {/* Floating Abbr Badge */}
                     <div
                       style={{
