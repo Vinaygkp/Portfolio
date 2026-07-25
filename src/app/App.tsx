@@ -934,7 +934,7 @@ function About() {
               }}
             >
               <img
-                src="/Vinay.png"
+                src="./Vinay.png"
                 alt="Vinay Kumar"
                 style={{
                   width: "100%",
