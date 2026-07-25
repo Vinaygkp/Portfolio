@@ -266,11 +266,9 @@ export function Navigation() {
     >
       {/* Left: Logo */}
       <a
-        href="https://leetcode.com/u/vinay55ti/"
-        onClick={(e) => {
-          e.preventDefault();
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }}
+        href="https://www.linkedin.com/in/vinay-kumar-5024aa263/"
+        target="_blank"
+        rel="noopener noreferrer"
         style={{
           textDecoration: "none",
           border: "none",
@@ -297,8 +295,42 @@ export function Navigation() {
         ))}
       </div>
 
-      {/* Right: Actions (Hire Me & Mobile Toggle) */}
+      {/* Right: Actions (LeetCode, Hire Me & Mobile Toggle) */}
       <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+        
+        {/* LeetCode Button */}
+        <a
+          href="https://leetcode.com/u/vinay55ti/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden md:block"
+          style={{
+            textDecoration: "none",
+            padding: "8px 18px",
+            borderRadius: 100,
+            background: "rgba(255,161,22,0.08)",
+            border: "1px solid rgba(255,161,22,0.3)",
+            color: "#FFA116",
+            fontSize: 13,
+            fontFamily: "Outfit,sans-serif",
+            fontWeight: 500,
+            cursor: "pointer",
+            transition: "all 0.25s",
+            display: "inline-block"
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "rgba(255,161,22,0.18)";
+            e.currentTarget.style.boxShadow = "0 0 20px rgba(255,161,22,0.25)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "rgba(255,161,22,0.08)";
+            e.currentTarget.style.boxShadow = "none";
+          }}
+        >
+          LeetCode
+        </a>
+
+        {/* Hire Me Button */}
         <button
           onClick={() => go("Contact")}
           className="hidden md:block"
@@ -325,6 +357,8 @@ export function Navigation() {
         >
           Hire Me
         </button>
+
+        {/* Mobile Menu Icon */}
         <button
           onClick={() => setOpen((v) => !v)}
           className="md:hidden"
@@ -370,6 +404,21 @@ export function Navigation() {
               {l}
             </button>
           ))}
+          {/* Mobile LeetCode Link */}
+          <a
+            href="https://leetcode.com/u/vinay55ti/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              color: "#FFA116",
+              textDecoration: "none",
+              fontSize: 18,
+              fontFamily: "Outfit,sans-serif",
+              padding: "4px 0",
+            }}
+          >
+            LeetCode ↗
+          </a>
         </div>
       )}
     </nav>
@@ -411,7 +460,6 @@ function NavLink({ children, onClick }: { children: ReactNode; onClick: () => vo
     </button>
   );
 }
-
 // ─── Magnetic Button ──────────────────────────────────────────────────────────
 
 function MagBtn({ children, onClick, variant = "primary" }: { children: ReactNode; onClick?: () => void; variant?: "primary" | "outline" | "ghost" }) {
